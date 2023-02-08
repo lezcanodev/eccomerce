@@ -1,0 +1,23 @@
+.categories{
+    width: 98%;
+    max-width: 400px;
+    margin: auto;
+}
+
+.categories__category{
+    display: block;
+    color: inherit;
+    text-decoration: none;
+    border:1px solid  rgba(var(--color-blue-1));
+    margin-top: 20px;
+    cursor: pointer;
+    padding: 10px ;
+    border-radius: var(--border-radius-standard);
+
+    transition: padding, border ease-in-out 200ms;
+}
+
+.categories__category:hover{
+    border-color:transparent;
+    border-left: 20px solid rgba(var(--color-blue-1));
+}
