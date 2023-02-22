@@ -1,0 +1,45 @@
+.tree{
+    box-sizing: border-box;
+    padding: 10px;
+    max-width: 300px;
+}
+
+.tree-node{
+    margin: 8px 0;
+    cursor: pointer;
+    position: relative;
+}
+
+.tree-node-name{
+    text-transform: capitalize;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    font-weight:bold;
+    color:  rgba(0,0,0,.4);
+}
+
+.tree-node-name:hover{
+    color:rgba(var(--color-blue-1));
+}
+
+.tree-node--active{
+    color:rgba(var(--color-blue-1));
+    font-weight: bold;
+}
+
+.tree-children{ 
+    overflow: hidden;
+    height: auto;
+}
+
+.tree-node  > .tree-children{
+    border-left: 1px solid  rgba(var(--color-blue-1),.4);;
+}
+
+
+.tree-node--children{
+    padding-left: 10px;
+}
+
+

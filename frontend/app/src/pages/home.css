@@ -1,0 +1,29 @@
+.main{
+    display: grid;
+    grid-template-columns: auto 1fr;
+    margin-top: 20px;
+    padding: 10px 0;
+    width: 100%;
+}
+
+.main-aside{
+    padding-left: 20px;
+}
+
+
+.main-products{
+
+}
+
+.main-products-pagination{
+    text-align: center;
+    margin-top: 20px;
+}
+
+.products{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+
+}

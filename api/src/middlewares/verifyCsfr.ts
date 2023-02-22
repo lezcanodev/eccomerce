@@ -13,6 +13,8 @@ export const verifyCSFR = (req: Request, res: Response, next: NextFunction) => {
        next(new Error(`The token is invalid!! - verify csfr -> ${req.cookies._csfr , req.body._csfr}`));
        return;
     }
+    
+    delete req.body._csfr;
 
     next();
 }

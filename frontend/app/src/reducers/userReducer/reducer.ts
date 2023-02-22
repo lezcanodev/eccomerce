@@ -1,5 +1,6 @@
 import USER_REDUCER_TYPES from "./types";
 import { IUser } from "../../api/user";
+import { initialState } from ".";
 
 export interface IUserState{
     user: IUser | null,
@@ -16,8 +17,9 @@ export default  function userReducer(state: IUserState, action: any): IUserState
                 user: action.payload,
                 isAuth: true
             };
-        case USER_REDUCER_TYPES.SIGN_IN:
-            return state;
+        case USER_REDUCER_TYPES.LOGOUT:
+
+            return initialState;
 
         case USER_REDUCER_TYPES.SIGN_IN:
             return state;

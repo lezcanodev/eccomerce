@@ -49,7 +49,34 @@
 }
 
 
+.input-with-icon{
+    background-color: #f5f5f5;
+    border:1px solid rgba(var(--color-dark-1), .5);
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+}
+
+.input-with-icon-icon{
+    box-sizing: border-box;
+    padding: 0px 10px;
+    padding-top: 6px;
+    margin: 0;
+    display: inline-block;
+    font-size: 1.6rem;
+    color: rgba(var(--color-dark-1));
+}
+
+.input-with-icon-input{
+    width: 100%;
+}
+
+.input-with-icon-input .input{
+    border: none;
+}
+
 .input{
+    background-color: #f5f5f5;
     margin: 0;
     box-sizing: border-box;
     width: 100%;
@@ -63,6 +90,9 @@
 }
 
 .input:focus,
-.input:active{
+.input:active,
+.input-with-icon:hover{
     border-color: rgba(var(--color-blue-1), 1);
 }
+
+

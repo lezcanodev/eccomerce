@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { getAll } from '../api/category';
+import { getAllCategories } from '../api/category';
 
 import './categories.css';
 import { useApi } from '../hooks/useApi';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 
 export default function Categories(){
-    const [loading, categories, setParams] = useApi(getAll);
-    const [categoryComponents, setCategoryComponent] = useState<React.ReactNode[]>([]);
-    
+    const [loading, categories, setParams] = useApi(getAllCategories);
+    const [searchParams, setSearchParams] = useSearchParams();
+
+
     if(loading){
         return <>loading...</>;
     }
@@ -17,16 +18,26 @@ export default function Categories(){
         return <>There arent categories</>; 
     }    
 
+    const handleNextPage = (ctgId: number, ctgName: string): string => {
+        if(!searchParams.get('product')){
+            return `/dashboard/product/public?categoryid=${ctgId}&categoryname=${ctgName}`;
+        }
+
+        return `/dashboard/product/edit/${searchParams.get('product')}?categoryid=${ctgId}&categoryname=${ctgName}`;
+    }
+
     return  <>
             
             <div className='categories'>
                 <p className='title'>Categories</p>
                {
-                categories.categories.map((ctg: any) => (
+                categories.data.map((ctg: any) => (
                    <Link 
                         key={`category--${ctg.id}`}
-                        to={`/product/public?categoryid=${ctg.id}&categoryname=${ctg.name}`}
-                        className='categories__category'    >
+                        to={handleNextPage(ctg.id, ctg.name)}
+                        className={
+                        `categories__category ${(searchParams.get('category') && ctg.id == searchParams.get('category')) ? 'categories__category--selected' : ''}` 
+                        }    >
                     {ctg.name}
                    </Link>
                 ))

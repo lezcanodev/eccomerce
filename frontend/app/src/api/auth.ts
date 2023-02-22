@@ -54,7 +54,20 @@ const signup = async (user: ISignup) => {
 }
 
 
+const logout = async () => {
+
+    const response = await fetch(`${BASE_URL}logout`, {
+        credentials: 'include'
+    });
+
+    const data = await response.json();
+
+    return data;
+}
+
+
 export {
     signin,
-    signup
+    signup,
+    logout
 }

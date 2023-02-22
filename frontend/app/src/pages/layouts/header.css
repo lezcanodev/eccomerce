@@ -1,0 +1,39 @@
+.header{
+    background-color: rgba(var(--color-blue-1));
+    color:rgba(var(--color-white-1));
+    padding: 10px;
+    display: grid;
+    place-items: center;
+    grid-template-columns: auto 1fr auto;
+    gap:10px;
+}
+
+.header-logo{
+    text-align: center;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 0 10px;
+}
+
+.header-body{
+    width: 100%;
+    margin: auto;
+    max-width: 800px;
+    display: grid;
+    place-items: center;
+    grid-template-columns: 1fr auto;
+}
+
+.header-body-search{
+    width: 100%;
+}
+
+.header-body-actions{
+    font-size: 1.3rem;
+}
+
+
+.header-footer{
+
+}

@@ -1,6 +1,7 @@
 import React from "react";
 import {Navigate, Outlet} from 'react-router';
 import { UserRole } from "../enums/userRoles";
+import Dashboard from "../pages/Dashboard";
 import { UserContext } from "../providers/userProvider";
 
 export default () => {
@@ -17,8 +18,8 @@ export default () => {
     console.log()
     if(!(userContext.user.user &&
         userContext.user.user.rol.name === UserRole.ADMIN)){
-        return <Navigate to={'/'}/>
+        return <>FORBIDDEN</>
     }
 
-    return <Outlet />;
+    return <Dashboard />;
 }

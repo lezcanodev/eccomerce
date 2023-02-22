@@ -1,0 +1,13 @@
+.ds{
+    display: grid;
+    grid-template-columns: auto 1fr;
+}
+
+.ds-content{
+    box-sizing: border-box;
+    width: 100%;
+    height: 100vh;
+    overflow-y: auto;
+    margin: 0  auto;
+    padding: 0 10px;
+}

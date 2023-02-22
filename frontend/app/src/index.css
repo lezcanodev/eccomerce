@@ -2,10 +2,14 @@
     --color-dark-1: 38, 37, 37;
     --color-white-1: 250, 250, 250;
     --color-blue-1: 0, 112, 255;
-   
+    --color-blue-1: 120, 112, 255;
+    --color-blue-1: 241, 116, 43;
     --color-error: #f33b3b;
 
     --border-radius-standard: 0px;
+
+    --z-index-min: 1;
+    --z-index-max: 10;
 }
 
 body{
@@ -14,12 +18,19 @@ body{
     color:rgba(var(--color-dark-1), .9);
 }
 
+a{
+    color:inherit;
+}
 
+/**************************************
+            BTN CLASSES
+***************************************/
 .btn{
     cursor: pointer;
     padding: 5px 15px;
     outline: none;
     border:none;
+    background: none;
     border-radius: var(--border-radius-standard);
 }
 
@@ -31,6 +42,14 @@ body{
 
     transition: all ease-in-out 200ms;
 }
+
+.btn--red{
+    color:var(--color-error);
+    box-shadow: 0px 2px 2px var(--color-error);
+    border:1px solid var(--color-error);
+    background-color: (var(--color-white-1));
+}
+
 
 .btn--normal:hover,
 .btn--load{
@@ -47,6 +66,20 @@ body{
 }
 
 
+.btn--icon{
+    color:rgba(var(--color-white-1), .8);
+    font-size: 1.5rem;
+}
+
+.btn--icon:hover{
+    color:rgba(var(--color-white-1), 1);
+}
+
+
+/**************************************
+            TEXT CLASSES
+***************************************/
+
 .title{
     font-size: 1.6rem;
     font-weight: 700;
@@ -55,8 +88,18 @@ body{
     padding-bottom: 10px;
 }
 
+.text-ellipsis{
+    white-space: nowrap;
+    max-width: 160px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/**************************************
+            IMAGE CLASSES
+***************************************/
 .img{
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
 }

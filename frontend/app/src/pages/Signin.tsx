@@ -4,10 +4,15 @@ import Form from "../components/Form";
 import FormBlock from "../components/FormBlock";
 import { signin } from "../api/auth";
 import InputPassword from "../components/InputPassword";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../providers/userProvider";
 
 export default function Signin(){
-    const [formError, setFormError] = useState('');
+    const userCtx = React.useContext(UserContext);
 
+    const [formError, setFormError] = useState('');
+    const navigate = useNavigate();
+    
     const handleRegister = async (e: any) => {
 
         const response = await signin({
@@ -19,7 +24,8 @@ export default function Signin(){
             setFormError(response.error);
             return;
         }
-
+        await userCtx.handleGetUser();
+        navigate('/');
     } 
 
     return (

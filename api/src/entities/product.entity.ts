@@ -36,7 +36,12 @@ export default class Product extends BaseEntity{
     @Column({
         name: 'price'
     })
-    price: string
+    price: number
+
+    @Column({
+        name: 'active'
+    })
+    active: boolean
 
     @Column({
         name: 'create_at'

@@ -21,3 +21,8 @@
     border-color:transparent;
     border-left: 20px solid rgba(var(--color-blue-1));
 }
+
+.categories__category--selected{
+    border-color:transparent;
+    border-left: 20px solid rgba(var(--color-blue-1));
+}

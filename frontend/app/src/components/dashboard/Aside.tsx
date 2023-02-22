@@ -1,6 +1,5 @@
 import React from 'react';
-import { FaDropbox, FaTags, FaUser } from 'react-icons/fa';
-import { BsNutFill } from 'react-icons/bs';
+import { FaDropbox, FaTags } from 'react-icons/fa';
 
 import './aside.css';
 import { Link } from 'react-router-dom';
@@ -25,14 +24,6 @@ export default function Aside({user}: {user: IUser | null}){
             <Link to='category' className='ds__item'>
                 <span className='ds__item__icon'><FaTags/></span>
                 <span className='ds__item__name'>Categories</span>
-            </Link>
-            <Link to='order' className='ds__item'>
-                <span className='ds__item__icon'><FaUser/></span>
-                <span className='ds__item__name'>Orders</span>
-            </Link>
-            <Link to='configuration' className='ds__item'>
-                <span className='ds__item__icon'><BsNutFill/></span>
-                <span className='ds__item__name'>Configuration</span>
             </Link>
         </div>
 

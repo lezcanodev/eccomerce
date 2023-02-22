@@ -7,13 +7,13 @@ export interface IInputOptions{
 }
 
 export default function Input({type, className, ...props}: {type: string} &  IInputOptions){
-    const {value, handleInput} = useInput('');
-
+    //const {value, handleInput} = useInput(props.defaultinputvalue ?? '');
+        /*value={value}
+onInput={(e) => handleInput(e)}*/
     return <input 
         type={type}
         className={`input ${className ?? ''}`}
-        value={value}
-        onInput={(e) => handleInput(e)}
+
         {...props}
     />
 }

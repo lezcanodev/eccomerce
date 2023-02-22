@@ -22,11 +22,26 @@ export default function parseFormData (formidableOptions: formidable.Options = {
                     next(err);
                     return;
                 }
-    
+                
+                const parseFiles: any = {};
+                
+                for(let file in files){
+
+                    if(!(files[file] instanceof Array)){
+                        parseFiles[file] = [files[file]];
+                    }else{
+                        parseFiles[file] = files[file];
+                    }
+
+                    parseFiles[file] = parseFiles[file].filter((fl: File) => (
+                        (fl.size > 0)
+                    ));
+                }
+                
                 req.body = {
                     ...req.body,
                     ...fields,
-                    files: files
+                    files: parseFiles
                 };            
             });
     

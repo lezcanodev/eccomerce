@@ -12,7 +12,6 @@ import { useInputErrors } from '../hooks/useInputErrors';
 
 
 export default function ProductPublic(){
-
     const [searchParams, setSearchParams] = useSearchParams();
 
     const {inputErrors, setErrors} = useInputErrors({
@@ -32,7 +31,7 @@ export default function ProductPublic(){
     }
 
     if(!searchParams.get('categoryname') || !searchParams.get('categoryid')){
-        return <Navigate to='/product/category' />
+        return <Navigate to='/dashboard/product/category' />
     }
 
 

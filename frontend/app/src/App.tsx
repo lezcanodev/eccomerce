@@ -1,9 +1,12 @@
 import React from 'react';
 import UserProvider from './providers/userProvider';
-import AppRouter from './router/AppRouter';
+import AppRoutes from './router/AppRouter';
 import apiConfig from './api/config';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import CartProvider from './providers/cartProvider';
 
 export const ContextApp = React.createContext({});
+const router = createBrowserRouter(AppRoutes);
 
 function App() {
 
@@ -14,7 +17,11 @@ function App() {
   return (
     <div className="App">
       <UserProvider>
-         <AppRouter />
+        <CartProvider>
+          <RouterProvider
+            router={router}
+          />
+        </CartProvider>
       </UserProvider>
     </div>
   );

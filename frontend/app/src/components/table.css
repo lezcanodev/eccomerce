@@ -1,0 +1,51 @@
+
+.table{
+ background-color: #00000018 ;
+}
+
+.thead{
+    text-align: center;
+}
+
+.tbody{
+    text-align: left;
+}
+
+.tfoot{
+  
+}
+
+.tbody,
+.tfoot{
+    background-color: rgba(var(--color-white-1));
+    text-align: left;
+}
+
+.tbody > tr > td,
+.thead > tr > th{
+    padding: 10px 10px;
+}
+
+
+.thead{
+    background-color: rgba(var(--color-blue-1),.85);
+    color:rgba(var(--color-white-1));
+}
+  
+.tfoot td{
+    text-align: right;
+}
+
+
+.table-row-actions{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 1.2rem;
+    height: 100%;
+}
+
+.table-row-action{
+    cursor: pointer;
+    color: rgba(var(--color-blue-1), 1);
+}

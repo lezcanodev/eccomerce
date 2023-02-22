@@ -1,0 +1,35 @@
+.product-page{
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap:20px;
+}
+
+.product-images{
+    max-width: 500px;
+    display: flex;
+    gap:10px;
+    overflow-x: auto;
+}
+
+.product-info{
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+}
+
+.product-title{
+    
+}
+
+.procut-price{
+    font-size: 1.3rem;
+}
+
+.product-description{
+    
+}

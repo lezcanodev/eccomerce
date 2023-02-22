@@ -61,11 +61,21 @@ export default class AuthController{
 
             res.cookie('token', token, {
                 maxAge: 24*60*60*1024,
+                path: '/',
                 httpOnly: true
             });
 
             res.send({status: 'success'});
 
+        }catch(err){
+            next(err);
+        }
+    }
+
+    public static logout = async (req: Request, res: Response, next: NextFunction) => {
+        try{  
+            res.clearCookie('token');
+            res.send({status: 'logout'});
         }catch(err){
             next(err);
         }
