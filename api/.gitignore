@@ -5,4 +5,5 @@
 /dist
 /.pnp
 .pnp.js
-
+/public/uploads/*
+/src/api/*/middlewares/temp/*

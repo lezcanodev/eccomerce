@@ -28,8 +28,10 @@ const start = async (): Promise<void> => {
         app.listen(process.env.PORT || 3002, function(){
             console.log('Server running...')
         });
+
     }catch(err){
         console.log('Application Error!!', err);
     }
 }
+
 start();

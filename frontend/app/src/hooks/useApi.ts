@@ -36,4 +36,4 @@ const useApi = (callback: (e?: any) => any) => {
 
 export {
     useApi
-}
+} 
