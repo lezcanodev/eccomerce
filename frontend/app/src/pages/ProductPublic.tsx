@@ -12,7 +12,7 @@ import { useInputErrors } from '../hooks/useInputErrors';
 
 
 export default function ProductPublic(){
-    const [searchParams, setSearchParams] = useSearchParams();
+    const [searchParams] = useSearchParams();
 
     const {inputErrors, setErrors} = useInputErrors({
         title: '',
@@ -20,8 +20,8 @@ export default function ProductPublic(){
         description: ''
     });
 
-    const handlePublicProduct = async (e: any) => {
-        const response = await publicProduct(new FormData(e.target));
+    const handlePublicProduct = async (e: React.FormEvent<HTMLFormElement>) => {
+        const response = await publicProduct(new FormData(e.target as HTMLFormElement));
         
         if(response.errors){
             setErrors(response.errors);

@@ -1,9 +1,6 @@
 import React from 'react';
 import { cartContext } from '../providers/cartProvider';
 import { ICartItem } from '../reducers/cartReducer';
-import Form from './Form';
-import FormBlock from './FormBlock';
-import InputText from './InputText';
 import Modal from './Modal';
 import Product from './Product';
 

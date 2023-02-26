@@ -7,7 +7,10 @@ export default class CategoryController{
 
     public static async get(req: Request, res: Response, next: NextFunction){
         try{
-            const ctgId = Number(req.params.categoryId);
+            const ctgId = DataTypesHelper.parseNumber(req.params.categoryId,{
+                default: 0,
+                negative: false
+            });
             
             if(!ctgId){
                 res.json({});
@@ -60,7 +63,7 @@ export default class CategoryController{
             
             await newCategory.save();
 
-            res.json({msg: 'store new cateogry'});
+            res.json({message: 'success'});
         }catch(err){
             next(err);
         }
@@ -70,7 +73,6 @@ export default class CategoryController{
     public static async update(req: Request, res: Response, next: NextFunction){
         try{
             const { name, parent, categoryId } = req.body;
-    
 
             const category = await AppDataSource.manager   
                                 .createQueryBuilder(Category, 'ctg')
@@ -80,7 +82,7 @@ export default class CategoryController{
                                 .getOne();
                     
             if(!category){
-                res.json({msg: 'failed update category'});
+                res.json({error: 'failed update category'});
                 return;
             }
 
@@ -92,7 +94,7 @@ export default class CategoryController{
             
             await category.save();
 
-            res.json({msg: 'update cateogry'});
+            res.json({message: 'success'});
         }catch(err){
             next(err);
         }
@@ -111,7 +113,7 @@ export default class CategoryController{
                                 })
                                 .execute();
                     
-            res.json({msg: 'remove cateogry'});
+            res.json({message: 'success'});
         }catch(err){
             next(err);
         }
@@ -119,7 +121,6 @@ export default class CategoryController{
 
     public static async getAllWithInfo(req: Request, res: Response, next: NextFunction){
         try{
-            
             const categories = await AppDataSource.createQueryBuilder(Category, 'ctg')
                                 .loadRelationCountAndMap('ctg.totalProducts', 'ctg.products')                    
                                 .getMany();
@@ -130,33 +131,10 @@ export default class CategoryController{
         }
     }
 
-    public static async getByLevel(req: Request, res: Response, next: NextFunction){
-        try{
-            let  parent: number | null =  DataTypesHelper.stringToNumber(req.query.parent, {
-                negative: false,
-                default: -1
-            });
-            if(parent == -1) parent = null;
-            
-            let query = AppDataSource.createQueryBuilder(Category, 'ctg');
-            if(parent){
-                query.where('ctg.parent_id = :parent', {parent});
-            }else{
-                query.where('ctg.parent_id IS NULL');
-            }
-
-            const categories = await query.getMany();
-
-            res.json({categories});
-        }catch(err){
-            next(err);
-        }
-    }
-
     public static async getTreeComplete(req: Request, res: Response, next: NextFunction){
         try{
             const categories = await Category.getTreeCategories();
-            res.json({categories});
+            res.json({data:categories});
         }catch(err){
             next(err);
         }

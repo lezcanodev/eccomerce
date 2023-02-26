@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useSearchParams, Navigate, Link, useLoaderData } from 'react-router-dom';
+import React, { MouseEventHandler, useState } from 'react';
+import { useSearchParams, Navigate, useLoaderData } from 'react-router-dom';
 import { editProduct } from '../api/product';
 import Form from '../components/Form';
 import FormBlock from '../components/FormBlock';
@@ -12,7 +12,7 @@ import { IProduct } from '../api/product';
 
 
 export default function ProductEdit(){
-    const [searchParams, setSearchParams] = useSearchParams();
+    const [searchParams] = useSearchParams();
     const product: IProduct = useLoaderData() as IProduct;
     const [removeImages, setRemoveImages] = useState<string[]>([]);
 
@@ -22,8 +22,8 @@ export default function ProductEdit(){
         description: ''
     });
 
-    const handleEditProduct = async (e: any) => {
-        const response = await editProduct(new FormData(e.target));
+    const handleEditProduct = async (e: React.FormEvent<HTMLFormElement>) => {
+        const response = await editProduct(new FormData(e.target as HTMLFormElement));
         
         if(response.errors){
             setErrors(response.errors);
@@ -84,7 +84,7 @@ export default function ProductEdit(){
                             <button
                             key={`image-${index}`}
                                 className='btn btn--normal'
-                                onClick={(e: any) => {
+                                onClick={(e: React.MouseEvent) => {
                                     const t = e.target as HTMLElement;
                                     t.remove()
                                     setRemoveImages([...removeImages, image.image.split('/').splice(-1)[0]]);

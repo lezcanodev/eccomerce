@@ -15,11 +15,11 @@
 }
 
 .product-public{
-    background-color: #018501e7;
+    background-color: #018501e7 !important;
 }
 
 
 .product-private{
-    background-color: #c50202e7;
+    background-color: #c50202e7 !important;
 
 }

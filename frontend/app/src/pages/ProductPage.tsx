@@ -9,10 +9,13 @@ import { ICartItem } from '../reducers/cartReducer';
 
 
 export default function ProductPage(){
-    const product: IProduct = useLoaderData() as IProduct;
+    const product: IProduct | null = useLoaderData() as IProduct;
     const cart = React.useContext(cartContext);
 
-
+    if(!product){
+        return <>Product doesnt exist!!</>;
+    }
+    
     return <div className='product-page'>
         <div className='product-images'>
             {product.images.map(({image}) => (<React.Fragment  key={`${image}-product-image`}>
@@ -23,7 +26,7 @@ export default function ProductPage(){
                 <h1 className='product-title'>
                     {product.title}
                 </h1>
-                <span><strong>category: </strong>{product.category.name}</span>
+                <span><strong>category: </strong>{product.category?.name}</span>
                 <span className='procut-price'>$ {product.price}</span>
                 <div    className='btn btn--normal'           
                         style={{width:'100%', 
@@ -37,7 +40,7 @@ export default function ProductPage(){
                             image: product.images[0].image})}>
                     {cart.cartState.items.map((p: ICartItem) => (<>
                         {p.productId === product.id ? (
-                            <React.Fragment key={`key-${p.productId}-1`}>{p.quantity}</React.Fragment>
+                            <React.Fragment key={`key-${p.productId}-14`}>{p.quantity}</React.Fragment>
                         ): <React.Fragment key={`key-${p.productId}`}></React.Fragment>}
                     </>))}
                     <BsCartPlus/>

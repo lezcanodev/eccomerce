@@ -17,19 +17,19 @@ export default function Pagination({
     currentPage,
     setPage
 }: IPaginationOptions){
-   // const [currentPage, setCurrentPage] = React.useState<number>(initialCurrentPage);
     const [pages, setPages] = React.useState<number[]>([]);
 
     React.useEffect(() => {
         const newPages: number[] = []
-       
+        let tempShowPages = showPages;
         if(currentPage-2 >= 0){ 
-            const p = (currentPage-2 === 0) ? 1 : currentPage-2;
+            const p = (currentPage-2 <= 0) ? 1 : currentPage-2;
 
             for(let i= p; i < currentPage; i++){
                 if(i <= totalPages){
+                    console.log(i)
                     newPages.push(i);
-                    showPages-=1;
+                    tempShowPages-=1;
                 }
             }
         }
@@ -37,9 +37,9 @@ export default function Pagination({
         for(let i=currentPage; i < (currentPage+showPages); i++){
             if(i <= totalPages){
                 newPages.push(i);
-            }
+            }else break;
         }
-
+        
         setPages(newPages);
         setPage(currentPage);
     }, [currentPage])

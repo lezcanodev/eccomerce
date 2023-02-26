@@ -40,7 +40,7 @@ export default function TreeCategories({
                         All
                     </div>
                 </div>
-            {treeCategories.categories.map( (ctg: any) => (
+            {treeCategories.data.map( (ctg: any) => (
                 
                 <div
                     onClick={(e) => handleCategory(e, ctg.id)}

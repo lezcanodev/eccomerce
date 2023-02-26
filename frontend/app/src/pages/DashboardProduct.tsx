@@ -11,7 +11,8 @@ import './dashboardProduct.css';
 
 export default function DashboardProduct(){
     const [loading, products, setProducts, params, setParams, setReLaod] = useApi(getPartialProducts);
-    
+    const [page, setPage] = React.useState<number>(1);
+
     React.useEffect(() => {
         setParams({
             ...params,
@@ -19,13 +20,12 @@ export default function DashboardProduct(){
         });
     }, [])
 
-    const handlePage = (page: number) => {
-        console.log("???")
-        /*setParams({
+    React.useEffect( () => {
+        setParams({
             ...params,
-            page: page
-        });*/
-    }
+            page
+        });
+    }, [page]);
 
     const handleDeleteProduct = async (product: string) => {
        const res = await deleteProduct(product);
@@ -81,9 +81,9 @@ export default function DashboardProduct(){
                     tfoot={<Pagination 
                         totalPages={products.totalPages}
                         showPages={5}
-                        currentPage={1}
-                        initialCurrentPage={params.page ?? 1}
-                        setPage={handlePage}
+                        currentPage={page}
+                        initialCurrentPage={1}
+                        setPage={setPage}
                     />}
                 >
                         {products.data.map((product: any) => (

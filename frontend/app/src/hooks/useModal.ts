@@ -11,4 +11,4 @@ export const useModal = (): [
     const handleClose = () => setOpen(false);
 
     return [handleOpen, handleClose, open];
-}
+} 

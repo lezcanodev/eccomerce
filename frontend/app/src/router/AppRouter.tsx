@@ -17,7 +17,7 @@ import ProductEdit from '../pages/ProductEdit';
 import { getProduct } from '../api/product';
 import CategoryPublic from '../pages/CategoryPublic';
 import CategoryEdit from '../pages/CategoryEdit';
-import { getCategory } from '../api/category';
+import { Category, getCategory } from '../api/category';
 import Home from '../pages/Home';
 import ProductPage from '../pages/ProductPage';
 import Header from '../pages/layouts/Header';
@@ -69,18 +69,13 @@ const AppRoutes = createRoutesFromElements(
             path='/dashboard'
             element={<AdminRoute/>}>
             
-      
-            <Route
-                index
-                element={<>Index dashboard</>}
-            />
-
             <Route
                 path='config'
                 element={<>Congiuracion</>}
             />
 
             <Route
+                index
                 path='product'
                 element={<DashboardProduct />}
             />
@@ -132,7 +127,7 @@ const AppRoutes = createRoutesFromElements(
             <Route
                 path='category/edit/:categoryId'
                 element={<CategoryEdit />}
-                loader={async ({ params }) => {
+                loader={async ({ params }): Promise<Category | null> => {
                     const category = await getCategory(Number(params.categoryId));
                     if(JSON.stringify(category) === '{}'){
                         return null;

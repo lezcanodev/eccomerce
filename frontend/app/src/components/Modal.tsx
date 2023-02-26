@@ -13,7 +13,6 @@ interface IModalOptions{
     handleClose:  () => void
 }
 
-
 const MODAL = document.getElementById('modal-container') as HTMLElement;
 
 export default function Modal({
@@ -23,7 +22,7 @@ export default function Modal({
     return ReactDOM.createPortal(<>
                 <div className={`modal ${className} ${state ? classShow : classHidden} `}>
                     <div className="modal-header">
-                        <button className="btn" onClick={handleClose}>
+                        <button className="btn btn--normal" onClick={handleClose} style={{width:'100%', marginTop:10, marginBottom:10}}>
                              &times;
                         </button>
                     </div>
@@ -33,5 +32,4 @@ export default function Modal({
                 </div>
                 {state && <div className="modal-overlay" onClick={handleClose}></div>}
                 </>, MODAL );
-
 }

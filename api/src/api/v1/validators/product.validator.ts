@@ -10,5 +10,4 @@ export default class ProductValidator{
             next(err);
         }
     }
-
 }

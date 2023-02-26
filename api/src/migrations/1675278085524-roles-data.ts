@@ -10,8 +10,6 @@ export class rolesData1675278085524 implements MigrationInterface {
         `);
     }
 
-    public async down(queryRunner: QueryRunner): Promise<void> {
-        //await queryRunner.query(`DELETE FROM "role";`);
-    }
+    public async down(queryRunner: QueryRunner): Promise<void> {}
 
 }

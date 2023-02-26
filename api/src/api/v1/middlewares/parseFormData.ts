@@ -2,7 +2,7 @@ import { NextFunction, Request, RequestHandler, Response } from "express";
 import formidable from 'formidable';
 import path from "path";
 
-export default function parseFormData (formidableOptions: formidable.Options = {}): RequestHandler {
+export default function parseFormData(formidableOptions: formidable.Options = {}): RequestHandler {
     
     return (req: Request, res: Response, next: NextFunction) => {
         try{

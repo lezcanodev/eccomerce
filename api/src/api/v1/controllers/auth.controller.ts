@@ -23,7 +23,7 @@ export default class AuthController{
             
             await newUser.save();
     
-            res.send({msg: 'ok'});
+            res.send({message: 'success'});
         }catch(err){
             next(err);
         }
@@ -37,7 +37,9 @@ export default class AuthController{
                                 .select([
                                 'user.passwordHash', 
                                 'user.nick',
-                                'user.id'])
+                                'user.id',
+                                'rol.id'])
+                                .leftJoin('user.rol', 'rol')
                                 .where(`user.nick = :nick`, {
                                     nick: nickOrEmail
                                 })
@@ -51,11 +53,12 @@ export default class AuthController{
                 res.json({error:'credential error'});
                 return;
             }
-        
+
             const token = await jwt.sign({
                 userId: user.id,
-                role: "role"
+                role: user.rol.id
             }, 
+
             String(process.env.JWT_SECRET_KEY),
             { expiresIn: '24h' });
 
@@ -65,7 +68,7 @@ export default class AuthController{
                 httpOnly: true
             });
 
-            res.send({status: 'success'});
+            res.send({message: 'success'});
 
         }catch(err){
             next(err);
@@ -75,7 +78,7 @@ export default class AuthController{
     public static logout = async (req: Request, res: Response, next: NextFunction) => {
         try{  
             res.clearCookie('token');
-            res.send({status: 'logout'});
+            res.send({message: 'success'});
         }catch(err){
             next(err);
         }

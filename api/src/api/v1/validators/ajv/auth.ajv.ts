@@ -1,7 +1,6 @@
 import User from "../../../../entities/user.entity";
 import ajv from "./ajv";
 
-
 const authSignupValidate = ajv.compile({
     $async: true,
     type: 'object',
@@ -25,12 +24,9 @@ const authSignupValidate = ajv.compile({
         'password':{
             type: 'string',
             minLength: 6
-        },
-        '_csfr':{
-            type: 'string'
         }
     },
-    required: ['_csfr', 'nick','email','password'],
+    required: ['nick','email','password'],
     additionalProperties: false
 });
 
@@ -44,12 +40,9 @@ const authSigninValidate = ajv.compile({
         },
         'password':{
             type: 'string'
-        },
-        '_csfr':{
-            type: 'string'
         }
     },
-    required: ['_csfr','password','nickOrEmail'],
+    required: ['password','nickOrEmail'],
     additionalProperties: false
 });
 

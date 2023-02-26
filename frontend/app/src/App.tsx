@@ -16,7 +16,7 @@ function App() {
 
   return (
     <div className="App">
-      <UserProvider>
+      <UserProvider>   
         <CartProvider>
           <RouterProvider
             router={router}

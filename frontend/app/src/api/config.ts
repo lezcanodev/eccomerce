@@ -19,7 +19,7 @@ const api: IApiConfig = {
         }
         return  `${this.baseUrl}/${apiVersion}/${resource}/`; 
     },
-    _csfr: (new Date()).getMilliseconds()+"<-token"
+    _csfr: (new Date()).getMilliseconds().toString()
 }
 
 export default api;

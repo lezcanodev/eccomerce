@@ -7,7 +7,6 @@ const ajv = new Ajv({
 });
 addFormats(ajv);
 
-
 ajv.addKeyword({
     keyword: 'noExist',
     async: true,

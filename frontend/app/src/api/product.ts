@@ -20,15 +20,12 @@ export interface IProduct{
     category: {
         id:number,
         name: string
-    }
+    } | null
 }
 
-
-
-
-
 const publicProduct = async (formData: FormData) => {
-    //formData.append('_csfr', api._csfr);
+    formData.append('_csfr', api._csfr);
+    
     const response = await fetch(`${BASE_URL}`,{
         method: 'POST',
         credentials: 'include',
@@ -42,6 +39,7 @@ const publicProduct = async (formData: FormData) => {
 }
 
 const editProduct = async (formData: FormData) => {
+    formData.append('_csfr', api._csfr);
 
     const response = await fetch(`${BASE_URL}`,{
         method: 'PUT',
@@ -78,7 +76,10 @@ const getPartialProducts = async (filters: IProductFilter = {
     }
 
 
-    const response = await fetch(`${BASE_URL}partial?${queries.toString()}`);
+    const response = await fetch(`${BASE_URL}partial?${queries.toString()}`, {
+        credentials: 'include'
+    });
+
     const data = await response.json();
     return data;
 }
@@ -87,7 +88,11 @@ const deleteProduct = async (product: string) => {
 
     const response = await fetch(`${BASE_URL}?product=${product}`,{
         method: 'DELETE',
-        credentials: 'include'
+        credentials: 'include',
+        body: JSON.stringify({_csfr: api._csfr}),
+        headers: {
+            'Content-Type': 'application/json'
+        }
     });
 
     const data = await response.json();

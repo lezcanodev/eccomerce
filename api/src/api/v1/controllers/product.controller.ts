@@ -1,9 +1,10 @@
 import { NextFunction, Request, Response } from "express";
+import FileHelper from "../../../helpers/file.helper";
+import { nanoid } from 'nanoid';
+import { RoleEnum } from "../../../enums/role.enum";
 import AppDataSource from "../../../database";
 import Product from "../../../entities/product.entity";
 import ProductImage from "../../../entities/productImage.entity";
-import FileHelper from "../../../helpers/file.helper";
-import { nanoid } from 'nanoid';
 import DataTypesHelper from "../../../helpers/dataTypes.helper";
 
 
@@ -13,7 +14,7 @@ export default class ProductController{
     public static async getPartial(req: Request, res: Response, next: NextFunction){
         try{
             
-           const page: number = DataTypesHelper.stringToNumber(req.query.page,{
+           const page: number = DataTypesHelper.parseNumber(req.query.page,{
                 negative: false,
                 default: 1
             });
@@ -34,6 +35,12 @@ export default class ProductController{
                                     .leftJoin('product.category', 'category')
                                     .leftJoin('product.user', 'user')
                                     .leftJoin('product.images', 'image');
+            
+                                
+            //Filters
+            if(req.body?.payload?.role !== RoleEnum.ADMIN){
+                query.andWhere('product.active = true');
+            }
                                     
             if(req.query.category){
                 query.andWhere('(product.categoryId = :category OR category.parentId = :category)',{
@@ -46,9 +53,9 @@ export default class ProductController{
                     query: `%${req.query.query}%`
                 });
             }
-          
+
             const totalProducts: number = (await query.clone()
-                                        .select(['count(*) as totalProducts'])
+                                        .select(['count(distinct product.id) as totalProducts'])
                                         .getRawOne()).totalproducts;
 
             let products = await query.orderBy('product.createAt', 'DESC')
@@ -64,7 +71,7 @@ export default class ProductController{
 
                 return product;
             });
-
+            
             const totalPages: number = Math.ceil(totalProducts/ProductController.PRODUCTS_PER_PAGE);
 
             res.json({
@@ -80,7 +87,7 @@ export default class ProductController{
 
     public static async get(req: Request, res: Response, next: NextFunction){
         try{
-            const productId = req.params.productId;
+            const productId = String(req.params.productId);
 
             let product = await AppDataSource.manager
                                     .createQueryBuilder(Product, 'product')
@@ -136,7 +143,7 @@ export default class ProductController{
             const fileNames: string[] = await FileHelper.upload('public', req.body.files['images']);
             await ProductImage.saveImages(fileNames, newProduct.id);
 
-            res.json({msg:"strore product - ok"});
+            res.json({message:'success'});
         }catch(err){
             next(err);
         }
@@ -146,16 +153,16 @@ export default class ProductController{
     public static async update(req: Request, res: Response, next: NextFunction){
         try{
             
-            const productId = req.body.product;
-            const userId = req.body.payload.userId;
+            const productId: string = req.body.product;
+            const userId: number = req.body.payload.userId;
             const product = await AppDataSource.manager
-                            .createQueryBuilder(Product, 'product')
-                            .where('product.userId = :userId AND product.id = :productId',
-                                   {userId, productId})
-                            .getOne();
-            
+                                    .createQueryBuilder(Product, 'product')
+                                    .where('product.userId = :userId AND product.id = :productId',
+                                        {userId, productId})
+                                    .getOne();
+                    
             if(!product){
-                res.json({msg:"Unathorized"});
+                res.json({error:'unauthorized'});
                 return;
             }
 
@@ -179,38 +186,37 @@ export default class ProductController{
             const fileNames: string[] = await FileHelper.upload('public', req.body.files['images']);
             await ProductImage.saveImages(fileNames, productId);
 
-            res.json({msg:"update product - ok"});
+            res.json({message:'success'});
         }catch(err){
-         
             next(err);
         }
     }
 
     public static async delete(req: Request, res: Response, next: NextFunction){
         try{
-            const productId = req.query.product;
-            const userId = req.body.payload.userId;
+            const productId = String(req.query.product);
+            const userId: number = req.body.payload.userId;
 
             const product = await AppDataSource.manager
-                             .createQueryBuilder(Product, 'p')
-                             .addSelect('images.image')
-                             .leftJoin('p.images', 'images')
-                             .where('p.userId = :userId AND p.id = :productId', {
-                                userId, productId
-                             })
-                             .getOne();
+                                    .createQueryBuilder(Product, 'p')
+                                    .addSelect('images.image')
+                                    .leftJoin('p.images', 'images')
+                                    .where('p.userId = :userId AND p.id = :productId', {
+                                        userId, productId
+                                    })
+                                    .getOne();
 
             if(!product){
-                res.json({msg: 'Product not exist'});
+                res.json({error: 'Product does not exist'});
                 return;
             }
 
             const deleteImages: string[] = product.images.map(({image}) => image);
+            
             FileHelper.remove('public', deleteImages);
-
             await Product.remove(product);
 
-            res.json({msg: 'OK - deleted'});
+            res.json({message: 'success'});
 
         }catch(err){
             next(err);
@@ -220,8 +226,8 @@ export default class ProductController{
 
     public static async changeState(req: Request, res: Response, next: NextFunction){
         try{
-            const productId = req.params.productId;
-            const userId = req.body.payload.userId;
+            const productId = String(req.params.productId);
+            const userId: number = req.body.payload.userId;
 
             const product = await AppDataSource.manager
                                 .createQueryBuilder(Product, 'p')
@@ -230,14 +236,15 @@ export default class ProductController{
                                 })
                                 .getOne();
             if(!product){
-                res.json({msg: 'OK - not change state '});
+                res.json({error: 'the state did not change'});
                 return;
             }
+            
             product.active = !product.active;
  
             await product.save();
 
-            res.json({msg: 'OK - change state'});
+            res.json({message: 'success'});
 
         }catch(err){
             next(err);

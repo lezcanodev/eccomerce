@@ -11,21 +11,22 @@ import { ModalCart } from '../../components/ModalCart';
 import { cartContext } from '../../providers/cartProvider';
 import { useModal } from '../../hooks/useModal';
 
-export default function Header({setQuery}: {setQuery?: ((query:string) => void)}){
+export default function Header({setQuery, defaultQuery}: {setQuery?: ((query:string) => void), defaultQuery?: string}){
     const userContext = React.useContext(UserContext);
     const cart = React.useContext(cartContext);
     const [handleOpenCart, handleCloseCart, openCart] = useModal();
+    const [newQuery, setNewQuery] = React.useState<string>('');
     const navigate = useNavigate();
 
-    const handleQuery = (e: any) => {
+    const handleQuery = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const newQuery = e.target.value;
+        setNewQuery(newQuery);
         if(typeof setQuery !== 'undefined'){
-            setQuery(e.target.value);
+            setQuery(newQuery);
             return;
         }
-
-        navigate('/?query=cervezas');
-
     }
+
 
     return <>
         <header className='header'>
@@ -41,11 +42,15 @@ export default function Header({setQuery}: {setQuery?: ((query:string) => void)}
             <div className='header-body'>
                 <div className='header-body-search'>
                     <InputWithIcon
-                        icon={<AiOutlineSearch />}
+                        icon={<AiOutlineSearch 
+                            style={{cursor:'pointer'}}
+                            onClick = {() => navigate(`/?query=${newQuery}`)}
+                        />}
                     >
                         <InputText
                             onInput = {(e: any) => handleQuery(e)}
                             name='search'
+                            defaultValue={defaultQuery ?? ''}
                             placeholder='Look for your product'
                         />
                     </InputWithIcon>

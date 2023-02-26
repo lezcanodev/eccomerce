@@ -1,42 +1,44 @@
-import React, { useState } from 'react';
-import { useLoaderData } from 'react-router-dom';
+import React  from 'react';
+import { Navigate, useLoaderData } from 'react-router-dom';
 import Form from '../components/Form';
 import FormBlock from '../components/FormBlock';
 import InputText from '../components/InputText';
 import { useInputErrors } from '../hooks/useInputErrors';
-import { editCategory, getAllCategories } from '../api/category';
+import { Category, editCategory, getAllCategories } from '../api/category';
 import { useApi } from '../hooks/useApi';
 
 
 export default function CategoryEdit(){
-    const category: any = useLoaderData();
-    const [loading, categories, setParams] = useApi(getAllCategories);
+    const category: Category = useLoaderData() as Category;
+    const [loading, categories] = useApi(getAllCategories);
 
     const {inputErrors, setErrors} = useInputErrors({
         name: '',
         parent:''
     });
 
-    const handleEditCategory = async (e: any) => {
+    const handleEditCategory = async (e: React.FormEvent<{
+        name: HTMLInputElement,
+        parent: HTMLInputElement,
+        categoryId: HTMLInputElement
+    }>) => {
+
         const response = await editCategory({
             name: e.currentTarget.name.value,
-            parent: e.currentTarget.parent.value,
-            categoryId: e.currentTarget.categoryId.value
+            parentId: Number(e.currentTarget.parent.value),
+            categoryId: Number(e.currentTarget.categoryId.value)
         });
         
         if(response.errors){
             setErrors(response.errors);
-        }
-
-        console.log(response);
+        }else{
+            alert('success');
+        }        
     }
 
     if(!category){
-        console.log("??")
-       // return <Navigate to='/dashboard/category' />
+       return <Navigate to='/dashboard/category' />
     }
-
-    console.log(category);
 
     return <Form
         title='Edit category'
@@ -62,7 +64,7 @@ export default function CategoryEdit(){
                 >
                         <select name="parent" 
                                 className='input' 
-                                defaultValue={category.parentId}
+                                defaultValue={String(category.parentId)}
                                 >
                             <option value="">None</option>
                             {loading ? <>Loading...</> : (

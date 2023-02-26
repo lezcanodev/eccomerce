@@ -1,6 +1,6 @@
 export default class DataTypesHelper{
 
-    public static stringToNumber(data: any, options: {
+    public static parseNumber(data: any, options: {
         negative: boolean,
         default: number
     } = {
@@ -8,9 +8,9 @@ export default class DataTypesHelper{
         default: 0
     }): number{
 
-        let  number: number = Number(data) || options.default;
+        const  number: number = Number(data) || options.default;
 
-        if(!(options.negative) && number && number < 0){
+        if(!(options.negative) && number < 0){
             return options.default;
         }
 

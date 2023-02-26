@@ -8,6 +8,9 @@ import { IUser } from '../../api/user';
 export default function Aside({user}: {user: IUser | null}){
 
     return <aside className='ds__aside'>
+        <div>
+            <Link to='/'>View page</Link>
+        </div>
         <div className='ds__user'>
             <figure className='ds__user__image'>
                 <img src="http://localhost:3002/uploads/b6jUNGz3G9UWkvsAiu4y1.jpeg" alt="" className='img' />

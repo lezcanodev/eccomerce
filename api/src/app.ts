@@ -6,22 +6,22 @@ import AppDataSource from './database';
 import appRouter from './api';
 import cookieParser from 'cookie-parser';
 import path from 'path';
-//import { verifyCSFR } from './middlewares/verifyCsfr';
 const app: Application = express(); 
 
+//Middlewares
 app.use(express.static(path.join(__dirname,'..', 'public')));
 app.use(cookieParser());
 app.use(express.json());
-//app.use(verifyCSFR);
 
+//Router
 app.use(appRouter);
 
+//Error Handling
 app.use((err: Error , req: Request, res: Response, next: NextFunction) => {
-    console.log(err.message, '=> HANDLE ERROR GENERAL <=');
-    res.json({error: err.message});
+    res.status(500).json({error: 'Internal Server Error'});
 });
 
-const start= async (): Promise<void> => {
+const start = async (): Promise<void> => {
     try{
         await AppDataSource.initialize();
 

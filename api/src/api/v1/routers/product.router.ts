@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { isAuthMiddleware } from '../middlewares/auth.middleware';
+import { verifyCSFR } from '../middlewares/verifyCsfr';
 import ProductValidator from '../validators/product.validator';
 import ProductController from '../controllers/product.controller';
 import parseFormData from '../middlewares/parseFormData';
@@ -7,38 +8,40 @@ import parseFormData from '../middlewares/parseFormData';
 const productRouter = Router();
 
 
-productRouter.get('/partial', ProductController.getPartial);
-productRouter.get('/:productId', ProductController.get);
+productRouter.get('/partial', 
+                  isAuthMiddleware({required: false}), 
+                  ProductController.getPartial);
+
+productRouter.get('/:productId', 
+                  ProductController.get);
+
 productRouter.get('/change-state/:productId', 
-    isAuthMiddleware,
-    ProductController.changeState);
+                  isAuthMiddleware(),
+                  ProductController.changeState);
 
 productRouter.post('/', 
-    isAuthMiddleware,
-    parseFormData({
-        multiples: true
-    }),
-    ProductValidator.store,
-    ProductController.store
-);
+                   isAuthMiddleware(),
+                   parseFormData({
+                       multiples: true,
+                       allowEmptyFiles: false
+                   }),
+                   verifyCSFR,
+                   ProductValidator.store,
+                   ProductController.store);
 
 productRouter.put('/', 
-    isAuthMiddleware,
-  /*  hasPermissionMiddleware({
-        action: Permission.edit,
-        model: Product
-    })*/
-    parseFormData({
-        multiples: true
-    }),
-    ProductValidator.store,
-    ProductController.update
-);
+                  isAuthMiddleware(),
+                  parseFormData({
+                      multiples: true
+                  }),
+                  verifyCSFR,
+                  ProductValidator.store,
+                  ProductController.update);
 
 productRouter.delete('/',
-    isAuthMiddleware,
-    ProductController.delete
-);
+                     isAuthMiddleware(),
+                     verifyCSFR,
+                     ProductController.delete);
 
 
 export default productRouter;

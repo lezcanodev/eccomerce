@@ -7,7 +7,7 @@ export default class UserController{
     public static get = async (req: Request, res: Response, next: NextFunction) => {
         try{
 
-            const user: {} | null = await AppDataSource.manager.createQueryBuilder(User, 'user')
+            const user: User | null = await AppDataSource.manager.createQueryBuilder(User, 'user')
                             .select([
                                 'user.id', 
                                 'user.nick',
