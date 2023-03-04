@@ -77,18 +77,24 @@ export default function Header({setQuery, defaultQuery}: {setQuery?: ((query:str
             <div className='header-footer'>
                 {(userContext.user.isAuth) ? (
                     <>
-                        {userContext.user.user?.nick}
+                        <span 
+        
+                        >{userContext.user.user?.nick}</span>
                         {(userContext.user.user?.rol.name === UserRole.ADMIN) ? (
                             <>
                                 <Link
                                     to='/dashboard'
                                 >
-                                    <AiFillDashboard />
+                                    <AiFillDashboard 
+                                        className='btn'
+                                        style={{paddingBottom:0}}
+                                    />
                                 </Link>
                             </>
                         ) : (<></>)}
                         <AiOutlineLogin
                             className='btn'
+                            style={{paddingBottom:0}}
                             onClick={userContext.handleLogout}
                         />
                     </>

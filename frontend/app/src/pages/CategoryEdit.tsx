@@ -63,8 +63,7 @@ export default function CategoryEdit(){
                     error={inputErrors.parent}
                 >
                         <select name="parent" 
-                                className='input' 
-                                defaultValue={String(category.parentId)}
+                                className='input'
                                 >
                             <option value="">None</option>
                             {loading ? <>Loading...</> : (

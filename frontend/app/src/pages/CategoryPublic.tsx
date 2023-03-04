@@ -61,7 +61,7 @@ export default function CategoryPublic(){
                     label='Parent'
                     error={inputErrors.parent}
                 >
-                        <select name="parent" id="" className='input'>
+                        <select name="parent" className='input'>
                             <option value="">None</option>
                             {loading ? <>Loading...</> : (
                                 <>

@@ -6,8 +6,11 @@ import { signup } from "../api/auth";
 import InputPassword from "../components/InputPassword";
 import InputEmail from "../components/InputEmail";
 import { useInputErrors } from "../hooks/useInputErrors";
+import { useNavigate } from "react-router-dom";
 
 export default function Signup(){
+    const navigate = useNavigate();
+
     const {inputErrors, setErrors} = useInputErrors({
         nick: '',
         email:'',
@@ -24,7 +27,10 @@ export default function Signup(){
 
         if(response.errors){
             setErrors(response.errors);
+            return;
         }
+
+        navigate('/login');
 
     } 
 

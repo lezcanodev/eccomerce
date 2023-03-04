@@ -13,7 +13,7 @@ const useInputErrors = (inputs: any) => {
             errors.forEach(({name, message}: {name: string, message: string} )=> {
                 actualInputErrors[name] = message; 
             });
-            console.log(inputErrors);
+  
             setInputErrors({...actualInputErrors});
             setErrors([]);
         }

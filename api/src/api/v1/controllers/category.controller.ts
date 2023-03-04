@@ -50,16 +50,15 @@ export default class CategoryController{
     
     public static async store(req: Request, res: Response, next: NextFunction){
         try{
-            const { name, parent } = req.body;
+            const { name, parentId } = req.body;
 
             const newCategory = new Category();
 
             newCategory.name = name;
 
-            if(parent){
-                newCategory.parentId = parent;
+            if(parentId){
+                newCategory.parentId = parentId;
             }
-            
             
             await newCategory.save();
 

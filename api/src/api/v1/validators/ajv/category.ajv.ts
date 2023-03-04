@@ -10,7 +10,7 @@ const storeCategoryValidate = ajv.compile({
             type: 'string',
             minLength: 2
         },
-        'parent':{
+        'parentId':{
             type: 'number',
             'exist': {
                 entity: Category,
@@ -37,7 +37,7 @@ const updateCategoryValidate = ajv.compile({
             type: 'string',
             minLength: 2
         },
-        'parent':{
+        'parentId':{
             type: 'number'
         }
     },
