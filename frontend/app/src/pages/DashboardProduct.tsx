@@ -56,6 +56,9 @@ export default function DashboardProduct(){
 
     return ( 
     <section className='ds-page ds-product'>
+        <h2>
+            Products
+        </h2>
         <div className='ds-product-header'>
             <Link 
                 className='btn btn--normal'

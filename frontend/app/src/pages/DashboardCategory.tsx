@@ -19,6 +19,9 @@ export default function DashboardCategory(){
 
     return (
         <section className='ds-page ds-category'>
+            <h2>
+                Categories
+            </h2>
             <div className='ds-product-header'>
             <Link 
                 className='btn btn--normal'

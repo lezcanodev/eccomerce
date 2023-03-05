@@ -11,8 +11,6 @@ import ProductSelectCategory from '../pages/ProductSelectCategory';
 import AdminRoute from './AdminRoute';
 import DashboardProduct from '../pages/DashboardProduct';
 import DashboardCategory from '../pages/DashboardCategory';
-import DashboardOrder from '../pages/DashboardOrder';
-import DashboardConfiguration from '../pages/DashboardConfiguration';
 import ProductEdit from '../pages/ProductEdit';
 import { getProduct } from '../api/product';
 import CategoryPublic from '../pages/CategoryPublic';
@@ -85,17 +83,6 @@ const AppRoutes = createRoutesFromElements(
                 element={<DashboardCategory />}
             />
 
-            <Route              
-                path='order'
-                element={<DashboardOrder />}
-            />
-
-            <Route
-                path='configuration'
-                element={<DashboardConfiguration />}
-            />
-
-       
             <Route
                 path='product/category'
                 element={<ProductSelectCategory />}

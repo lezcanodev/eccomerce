@@ -12,9 +12,9 @@ export default function Dashboard(){
 
         <Aside
             user={userContext.user.user}
+            logout={userContext.handleLogout}
         />
         <div className='ds-content'>
-        <button onClick={userContext.handleLogout}>log out</button>
             <Outlet />
         </div>
         
